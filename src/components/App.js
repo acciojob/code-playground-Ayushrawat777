@@ -9,10 +9,9 @@ import {
   Outlet,
 } from "react-router-dom";
 // react router dom version 5 was used here
-import Login from "./login";
+import Login from "./Login";
 import Home from "./Home";
 import NotFound from "./NotFound";
-import Joy from "./joy";
 
 const PrivateRoute = ({ isAuthenticated }) => {
   return isAuthenticated ? <Outlet /> : <Navigate to={"/login"} />;
