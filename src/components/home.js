@@ -1,7 +1,11 @@
-import React from "react";
+import React from 'react'
 
-export default class Home extends React.Component {
-  render() {
-    return <div>Hi Welcome to Code PlayGround</div>;
-  }
+const Home = () => {
+  return (
+    <div>
+    Hi Welcome to Code Playground
+    </div>
+  )
 }
+
+export default Home
