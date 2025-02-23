@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-
-import "../styles/App.css";
-import Home from "./Home";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Login from "./Login";
-import Navigation from "./Navigation";
 import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
@@ -13,13 +9,30 @@ const App = () => {
   return (
     <Router>
       <div className="main-container">
-        <Navigation isAuthenticated={isAuthenticated} />
+        <p>
+          {isAuthenticated
+            ? "✅ Logged in, Now you can enter playground"
+            : "❌ You are not authenticated, Please login first"}
+        </p>
+        <ul>
+          <li>
+            <Link to="/private">PlayGround</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </ul>
+
+        {/* Use Switch instead of Routes */}
         <Switch>
-          <Route path="/login">
-            <Login setIsAuthenticated={setIsAuthenticated} />
-          </Route>
-          <PrivateRoute path="/home" component={Home} isAuthenticated={isAuthenticated} />
-          <Redirect from="/" to="/login" />
+          <Route
+            path="/login"
+            render={(props) => (
+              <Login {...props} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+            )}
+          />
+          <PrivateRoute path="/private" isAuthenticated={isAuthenticated} />
+          <Route component={<p>page not found</p>} /> {/* Catch-all route for 404 */}
         </Switch>
       </div>
     </Router>
@@ -27,3 +40,4 @@ const App = () => {
 };
 
 export default App;
+
