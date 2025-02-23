@@ -1,21 +1,8 @@
 .main-container {
   text-align: center;
   font-family: Arial, sans-serif;
-  margin-top: 20px;
-}
-nav {
-  margin-bottom: 20px;
-}
-nav a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: blue;
-}
-button {
-  padding: 10px;
-  background: green;
-  color: white;
-  border: none;
-  cursor: pointer;
 }
 
+nav a {
+  margin: 0 10px;
+}
