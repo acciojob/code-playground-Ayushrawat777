@@ -1,43 +1,52 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Login from "./Login";
-import PrivateRoute from "./PrivateRoute";
-import "../styles/App.css";
+// src/App.js
+// src/App.js
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import LoginPage from './LoginPage';
+import Playground from './Playground';
+
+
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setAuth] = useState(false);
+
+  const handleLogin = () => {
+    setAuth(true);
+  };
+
+  const handleLogout = () => {
+    setAuth(false);
+  };
 
   return (
     <Router>
       <div className="main-container">
-        <p>
-          {isAuthenticated
-            ? "✅ Logged in, Now you can enter playground"
-            : "❌ You are not authenticated, Please login first"}
-        </p>
-        <ul>
-          <li>
-            <Link to="/private">PlayGround</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-
-        {/* Use Switch instead of Routes */}
-        <Switch>
-          <Route
-            path="/login"
-            render={(props) => (
-              <Login {...props} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
-            )}
+        <p>{isAuthenticated ? 'Logged in, Now you can enter Playground' : 'You are not authenticated, Please login first'}</p>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/playground">PlayGround</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/login" element={
+            <LoginPage 
+              isAuthenticated={isAuthenticated} 
+              handleLogin={handleLogin} 
+              handleLogout={handleLogout} 
+            />} 
           />
-          <PrivateRoute path="/private" isAuthenticated={isAuthenticated} />
-          <Route component={<p>page not found</p>} /> {/* Catch-all route for 404 */}
-        </Switch>
+          <Route path="/playground" element={
+           isAuthenticated ? <Playground /> : <Navigate to="/login" replace />
+          } />
+          <Route path="*" element={<div className="main-container">Page Not Found</div>} />
+        </Routes>
       </div>
     </Router>
   );
 };
 
 export default App;
-
